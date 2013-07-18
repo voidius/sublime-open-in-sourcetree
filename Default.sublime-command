@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Open in SourceTree",
+        "command": "open_in_sourcetree"
+    }
+]
