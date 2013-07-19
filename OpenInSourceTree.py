@@ -22,7 +22,6 @@ class OpenInSourcetreeCommand(sublime_plugin.WindowCommand):
             sublime.error_message(__name__ + ': stree executable path not set, incorrect or no stree?')
             return False
 
-
         if settings.get('detect_git', True):
             path = self.get_git_path(path)
 
@@ -34,7 +33,7 @@ class OpenInSourcetreeCommand(sublime_plugin.WindowCommand):
 
     def get_git_path(self, path):
         git_path = path
-        while (git_path != '/') or ('.git' in os.listdir(git_path)):
+        while ('.git' not in os.listdir(git_path)) and (git_path != '/'):
             git_path = os.path.dirname(git_path)
 
         if git_path != '/':
