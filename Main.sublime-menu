@@ -1,0 +1,45 @@
+[
+  {
+    "caption": "Preferences",
+    "mnemonic": "n",
+    "id": "preferences",
+    "children":
+    [
+      {
+        "caption": "Package Settings",
+        "mnemonic": "P",
+        "id": "package-settings",
+        "children":
+        [
+          {
+            "caption": "Open In SourceTree",
+            "children":
+            [
+              {
+                "command": "open_file",
+                "args": {"file": "${packages}/OpenInSourceTree/Default.sublime-settings"},
+                "caption": "Settings – Default"
+              },
+              {
+                "command": "open_file",
+                "args": {"file": "${packages}/User/Default.sublime-settings"},
+                "caption": "Settings – User"
+              },
+              { "caption": "-" },
+              {
+                "command": "open_file",
+                "args": {"file": "${packages}/OpenInSourceTree/Default.sublime-commands"},
+                "caption": "Key Bindings – Default"
+              },
+              {
+                "command": "open_file",
+                "args": {"file": "${packages}/User/Default.sublime-commands"},
+                "caption": "Key Bindings – User"
+              },
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
