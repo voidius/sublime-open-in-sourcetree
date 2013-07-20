@@ -7,39 +7,41 @@ import sublime, sublime_plugin
 class OpenInSourcetreeCommand(sublime_plugin.WindowCommand):
 
 
+    settings = sublime.load_settings('OpenInSourceTree.sublime-settings')
+
+
     def run(self, *args):
         sublime.status_message(__name__ + ': running')
 
-        settings   = sublime.load_settings('Default.sublime-settings')
-        stree_path = self.get_stree_path(settings)
+        stree_path = self.get_stree_path()
         path       = self.get_path()
 
         if path in ['', None]:
-            sublime.status_message(__name__ + ': No place to open Source Tree to')
+            sublime.status_message(__name__ + ': No place to open SourceTree to')
             return False
 
         if stree_path in ['', None]:
-            sublime.error_message(__name__ + ': stree executable path not set, incorrect or no stree?')
+            sublime.error_message(__name__ + ': No SourceTree executable found: is it installed?')
             return False
 
-        if settings.get('detect_git', True):
+        if self.settings.get('detect_git', True):
             path = self.get_git_path(path)
 
         if stree_path.endswith(".app"):
             subprocess.call(['open', '-a', stree_path, path])
         else:
-            p = subprocess.Popen([stree_path], cwd=path.encode(locale.getpreferredencoding(do_setlocale=True)), shell=True)
+            subprocess.Popen([stree_path], cwd=path.encode(locale.getpreferredencoding(do_setlocale=True)), shell=True)
 
 
-    def get_git_path(self, path):
-        git_path = path
+    def get_git_path(self, initial_path):
+        git_path = initial_path
         while ('.git' not in os.listdir(git_path)) and (git_path != '/'):
             git_path = os.path.dirname(git_path)
 
         if git_path != '/':
             return git_path
         else:
-            return path
+            return initial_path
 
 
     def get_path(self):
@@ -56,8 +58,8 @@ class OpenInSourcetreeCommand(sublime_plugin.WindowCommand):
         return path
 
 
-    def get_stree_path(self, settings):
-        stree_path = settings.get('stree_path', '/usr/local/bin/stree')
+    def get_stree_path(self):
+        stree_path = self.settings.get('stree_path', '/usr/local/bin/stree')
 
         if not os.path.isfile(stree_path):
             mac_path = '/Applications/SourceTree.app'
