@@ -1,0 +1,3 @@
+[
+  { "keys": ["super+k", "super+s"], "command": "open_in_sourcetree" }
+]
