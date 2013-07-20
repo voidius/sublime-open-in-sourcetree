@@ -1,4 +1,9 @@
 {
+    // stree_path - path to command line tool of SourceTree;
+    //              in case it's not installed (through SourceTree)
+    //              plugin will try to open SourceTree.app
     "stree_path": "/usr/local/bin/stree",
+    // detect_git - if true, plugin will try to open whole git project;
+    //              if false, plugin will just open current file
     "detect_git": true
 }
