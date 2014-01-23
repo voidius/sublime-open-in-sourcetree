@@ -6,9 +6,10 @@ import sublime, sublime_plugin
 
 class OpenInSourcetreeCommand(sublime_plugin.WindowCommand):
 
+    FALLBACK_STREE_PATH = '/usr/local/bin/stree'
+    FALLBACK_STREE_MAC_PATH = '/Applications/SourceTree.app'
 
     settings = sublime.load_settings('OpenInSourceTree.sublime-settings')
-
 
     def run(self, *args):
         sublime.status_message(__name__ + ': running')
@@ -59,10 +60,13 @@ class OpenInSourcetreeCommand(sublime_plugin.WindowCommand):
 
 
     def get_stree_path(self):
-        stree_path = self.settings.get('stree_path', '/usr/local/bin/stree')
+        stree_path = self.settings.get('stree_path', self.FALLBACK_STREE_PATH)
+
+        if stree_path == None:
+            stree_path = self.FALLBACK_STREE_PATH
 
         if not os.path.isfile(stree_path):
-            mac_path = '/Applications/SourceTree.app'
+            mac_path = self.FALLBACK_STREE_MAC_PATH
             if os.path.isdir(mac_path):
                 stree_path = mac_path
             else:
